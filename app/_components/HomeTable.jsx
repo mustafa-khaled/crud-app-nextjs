@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { deleteItem } from "../_lib/data-service";
+import { deleteUser } from "../_lib/actions";
 
 import Popup from "./Popup";
 import AddEditUserForm from "./AddEditUserForm";
@@ -20,14 +20,6 @@ function HomeTable({ usersData }) {
   const handleOpenPopup = (user = null) => {
     setSelectedUser(user);
     setIsPopupOpen(true);
-  };
-
-  const handleDeleteUser = async (userId) => {
-    try {
-      await deleteItem(userId);
-    } catch (error) {
-      console.error("Failed to delete user:", error.message);
-    }
   };
 
   return (
@@ -73,7 +65,7 @@ function HomeTable({ usersData }) {
                       <button onClick={() => handleOpenPopup(user)}>
                         Edit
                       </button>
-                      <button onClick={() => handleDeleteUser(user?._id)}>
+                      <button onClick={() => deleteUser(user?._id)}>
                         Delete
                       </button>
                     </td>

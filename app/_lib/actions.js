@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { addItems, updateItems } from "./data-service";
+import { addItems, deleteItem, updateItems } from "./data-service";
 
 export async function addUser(prevState, formData) {
   const useName = formData.get("useName");
@@ -25,6 +25,7 @@ export async function addUser(prevState, formData) {
   });
 
   revalidatePath("/");
+  return { success: true };
 }
 
 export async function updateUser(prevState, formData) {
@@ -52,6 +53,17 @@ export async function updateUser(prevState, formData) {
     dropDownMenu: options,
     checkBox: idAdmin === "on",
   });
+
+  revalidatePath("/");
+  return { success: true };
+}
+
+export async function deleteUser(userId) {
+  try {
+    await deleteItem(userId);
+  } catch (error) {
+    console.error("Failed to delete user:", error.message);
+  }
 
   revalidatePath("/");
 }

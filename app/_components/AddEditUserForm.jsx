@@ -1,5 +1,7 @@
 import { useFormState } from "react-dom";
 import { addUser, updateUser } from "../_lib/actions";
+import { useEffect } from "react";
+import SubmitButton from "./SubmitButton";
 
 function AddEditUserForm({ user, closePopup }) {
   const isEditingSession = Boolean(user);
@@ -8,6 +10,14 @@ function AddEditUserForm({ user, closePopup }) {
     isEditingSession ? updateUser : addUser,
     {}
   );
+
+  const successOperation = state.success === true;
+
+  useEffect(() => {
+    if (successOperation) {
+      closePopup();
+    }
+  }, [successOperation]);
 
   return (
     <form
@@ -33,7 +43,7 @@ function AddEditUserForm({ user, closePopup }) {
         <option value={"Three"}>Three</option>
       </select>
 
-      <button type="submit">Submit</button>
+      <SubmitButton>Submit</SubmitButton>
 
       {state?.useName && (
         <span className="text-center bg-red-300 text-red-500 w-full p-[5px] rounded-md text-sm mt-[20px]">

@@ -14,8 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${inter.className} bg-gray-700 text-gray-500`}>
         <Header />
-        <main>{children}</main>
-        <div id="modal-root"></div>
+        <main className="my-[30px]">{children}</main>
       </body>
     </html>
   );
